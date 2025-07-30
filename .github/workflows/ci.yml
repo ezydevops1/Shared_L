@@ -1,8 +1,10 @@
 name: Python CI
 
 on:
+  push:  
+    branches: [main]
   pull_request:
-    branches: [main, dev, qa, prod]
+    branches: [dev, qa, prod]
 
 jobs:
   build-and-test:
@@ -15,7 +17,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.8.10 # Change if you use another version
+          python-version: 3.12.3 # Change if you use another version
 
       - name: Install dependencies
         run: |
