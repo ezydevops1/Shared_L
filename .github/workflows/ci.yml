@@ -2,45 +2,31 @@ name: CI Checks
 
 on:
   pull_request:
-    branches: [main, dev, qa, prod]  # Trigger on PRs to these branches
+    branches: [main, dev, qa, prod]
 
 jobs:
-  lint:
-    name: Run Linter
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: '3.10'
+
       - name: Install dependencies
         run: |
-          pip install flake8
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
       - name: Run lint
         run: |
-          flake8 . || true  # Allow non-zero exit for testing setup
+          flake8 .
 
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.8'
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt || true
       - name: Run tests
         run: |
-          echo "Running tests here"
-          # Add pytest or unittest here
-          # pytest tests/
+          pytest tests/
 
-  build:
-    name: Build Application
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build step
-        run: echo "Build successful"  # Replace with your actual build command
