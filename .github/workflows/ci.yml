@@ -2,7 +2,7 @@ name: CI Checks
 
 on:
   pull_request:
-    branches: [main, dev, qa, prod]  # Trigger on PRs to these branches
+    branches: [main, dev, qa, prod]  # Trigger on PRs to these branche
 
 jobs:
   lint:
